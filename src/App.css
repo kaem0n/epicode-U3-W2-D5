@@ -1,0 +1,12 @@
+.pointer {
+  cursor: pointer;
+}
+
+.contain {
+  background-size: cover !important;
+  background-position: center !important;
+}
+
+.custom-link {
+  color: var(--bs-heading-color);
+}

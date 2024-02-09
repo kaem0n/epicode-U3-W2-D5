@@ -59,7 +59,9 @@ const City = () => {
       className="p-lg-5 h-75 contain"
       fluid
       style={{
-        background: `linear-gradient(0deg, var(--bs-body-bg) 0%, rgba(0,0,0,0) 60%), url(${bg})`,
+        background: `linear-gradient(0deg, var(--bs-body-bg) 0%, rgba(0,0,0,0) 60%), ${
+          bg ? `url(${bg})` : 'var(--bs-primary-bg-subtle)'
+        }`,
       }}
     >
       {isLoading ? (

@@ -3,12 +3,13 @@ import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import Form from 'react-bootstrap/Form'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const MyNavBar = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const [searchInput, setSearchInput] = useState('')
+  const [check, setCheck] = useState(Boolean(localStorage.getItem('checked')))
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -16,13 +17,27 @@ const MyNavBar = () => {
     setSearchInput('')
   }
 
-  const changeTheme = () => {
+  const changeTheme = (boolean) => {
     const html = document.getElementsByTagName('html')[0]
-    const theme = html.getAttribute('data-bs-theme')
-    theme === 'light'
-      ? html.setAttribute('data-bs-theme', 'dark')
-      : html.setAttribute('data-bs-theme', 'light')
+    if (boolean === true) {
+      localStorage.setItem('checked', check)
+      html.setAttribute('data-bs-theme', 'light')
+    } else {
+      localStorage.clear()
+      html.setAttribute('data-bs-theme', 'dark')
+    }
   }
+
+  const clear = () => localStorage.clear()
+
+  const handleCheck = () => {
+    setCheck(!check)
+  }
+
+  useEffect(() => {
+    changeTheme(check)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [check])
 
   return (
     <Navbar collapseOnSelect expand="lg" className="fixed-top bg-body-tertiary">
@@ -47,10 +62,13 @@ const MyNavBar = () => {
             </Nav.Link>
           </Nav>
           <Nav>
+            <button className="me-5" onClick={() => clear()}>
+              CLEAR LOCALSTORAGE
+            </button>
             <Form onSubmit={handleSubmit} className="d-flex align-items-center">
               <div className="d-flex align-items-center">
                 <i className="fa-solid fa-circle-half-stroke me-1"></i>
-                <Form.Switch onChange={() => changeTheme()} />
+                <Form.Switch onChange={() => handleCheck()} checked={check} />
               </div>
               <Form.Control
                 type="search"

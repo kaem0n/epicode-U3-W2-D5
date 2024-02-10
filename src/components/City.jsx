@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import { Col, Container, Row, Spinner } from 'react-bootstrap'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const City = () => {
   const params = useParams()
+  const navigate = useNavigate()
   const [cityData, setCityData] = useState(null)
   const [bg, setBg] = useState(undefined)
   const [isLoading, setIsLoading] = useState(true)
@@ -22,6 +23,7 @@ const City = () => {
       }
     } catch (err) {
       console.log(err)
+      navigate('not-found')
     }
   }
 
@@ -73,7 +75,9 @@ const City = () => {
           <Row className="h-100 align-items-end px-2 px-lg-5 mb-5">
             <Col>
               <div className="d-flex align-items-center">
-                <h1 className="m-0">Weather in {cityData.name}</h1>
+                <h1 className="m-0">
+                  Weather in {cityData.name} ({cityData.sys.country})
+                </h1>
                 <img
                   src={`https://openweathermap.org/img/wn/${cityData.weather[0].icon}@2x.png`}
                   alt=""

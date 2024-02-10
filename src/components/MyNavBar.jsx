@@ -28,8 +28,6 @@ const MyNavBar = () => {
     }
   }
 
-  const clear = () => localStorage.clear()
-
   const handleCheck = () => {
     setCheck(!check)
   }
@@ -62,9 +60,6 @@ const MyNavBar = () => {
             </Nav.Link>
           </Nav>
           <Nav>
-            <button className="me-5" onClick={() => clear()}>
-              CLEAR LOCALSTORAGE
-            </button>
             <Form onSubmit={handleSubmit} className="d-flex align-items-center">
               <div className="d-flex align-items-center">
                 <i className="fa-solid fa-circle-half-stroke me-1"></i>
